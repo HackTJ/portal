@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "portal"
+version = "0.1.0"
+description = ""
+authors = ["Krishnan Shankar <krishnans2006@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^5.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
