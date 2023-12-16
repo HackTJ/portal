@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "portal.apps.main",
 ]
 
 MIDDLEWARE = [
@@ -61,6 +62,8 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTH_USER_MODEL = "main.User"
 
 WSGI_APPLICATION = "portal.wsgi.application"
 
