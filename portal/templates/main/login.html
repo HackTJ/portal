@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}HackTJ Portal: Log In{% endblock %}
+
+{% block content %}
+  <div class="d-flex flex-column align-items-center">
+    <h1 class="text-center">Log In</h1>
+    <a class="btn btn-success" href="{% url 'social:begin' 'google-oauth2' %}">Log In With Google</a>
+  </div>
+{% endblock %}

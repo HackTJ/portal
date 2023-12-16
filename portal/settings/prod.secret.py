@@ -17,4 +17,7 @@ DATABASES = {
     }
 }
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "abc.apps.googleusercontent.com"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "abc"
+
 STATIC_ROOT = "/var/www/portal/static"
