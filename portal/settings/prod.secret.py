@@ -1,0 +1,20 @@
+# Rename this file to secret.py to be used in production.
+
+DEBUG = False
+
+SECRET_KEY = "django-notinsecure-x45u%b4qr#sze#%w@uy&nx*c%6(k9s(%4quww(&xp(ka4lib_5"
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "portal",
+        "USER": "portal",
+        "PASSWORD": "portal",
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
+    }
+}
+
+STATIC_ROOT = "/var/www/portal/static"
