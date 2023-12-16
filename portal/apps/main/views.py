@@ -5,8 +5,6 @@ from django.shortcuts import render, redirect
 
 
 def index_view(request: HttpRequest) -> HttpResponse:
-    if request.user.is_authenticated:
-        print(vars(request.user._wrapped))
     return render(request, "main/index.html")
 
 
