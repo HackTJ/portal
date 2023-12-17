@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from portal.apps.locations.models import Location
+from .models import Location
 
 
 @admin.register(Location)
