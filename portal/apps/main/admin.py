@@ -10,5 +10,3 @@ class UserAdmin(admin.ModelAdmin):
     list_filter = ("is_participant", "is_judge", "is_team")
     search_fields = ("username", "email")
     ordering = ("username",)
-
-

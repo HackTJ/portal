@@ -10,6 +10,16 @@ python = "^3.11"
 django = "^5.0"
 social-auth-app-django = "^5.4.0"
 
+[tool.poetry.group.dev.dependencies]
+black = "^23.12.0"
+
+[tool.black]
+line-length = 99
+exclude = '''
+/(
+  | migrations
+)/
+'''
 
 [build-system]
 requires = ["poetry-core"]
