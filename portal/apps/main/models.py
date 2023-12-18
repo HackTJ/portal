@@ -11,6 +11,10 @@ class User(AbstractUser):
     def is_admin(self):
         return self.is_superuser or self.is_team
 
+    @property
+    def is_admin_admin(self):
+        return self.is_admin and self.is_staff
+
     def has_module_perms(self, app_label):
         if self.is_admin:
             return True
