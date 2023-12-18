@@ -10,4 +10,10 @@
     &nbsp;
     Create Category
   </a>
+  {% if request.user.is_admin_admin %}
+    <a href="{% url 'admin:categories_category_changelist' %}" class="btn">
+      <i class="bi bi-gear"></i>
+      Admin
+    </a>
+  {% endif %}
 {% endblock %}

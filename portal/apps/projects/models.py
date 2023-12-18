@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.urls import reverse
 
 from ..categories.models import Category
 from ..locations.models import Location
@@ -38,6 +39,9 @@ class Project(models.Model):
 
     def __repr__(self):
         return f"<Project: {self.name}>"
+
+    def get_absolute_url(self):
+        return reverse("projects:detail", args=(self.id,))
 
     class Meta:
         default_related_name = "projects"
