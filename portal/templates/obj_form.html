@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}HackTJ Portal: {{ title }}{% endblock %}
+
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% bootstrap_button button_type="submit" content="Submit" %}
+  </form>
+{% endblock %}

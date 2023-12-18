@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}HackTJ Portal: Project Detail{% endblock %}
+
+{% block content %}
+  <div class="d-flex align-items-center">
+    <h1>{{ project.name }}</h1>
+    &emsp;
+    <div class="btn-group">
+      <a href="{% url 'projects:update' project.id %}" class="btn btn-secondary btn-sm">Edit</a>
+      <a href="{% url 'projects:delete' project.id %}" class="btn btn-danger btn-sm">Delete</a>
+    </div>
+  </div>
+  <p>{{ project.description }}</p>
+
+  <p>Location</p>
+  <ul class="list-group">
+    {% if project.location %}
+      {% include 'locations/repr.html' with location=project.location %}
+    {% endif %}
+    {% if project.location_description %}
+      <li class="list-group-item">{{ project.location_description }}</li>
+    {% endif %}
+  </ul>
+  <br>
+
+  <p>Categories:</p>
+  <ul class="list-group">
+    {% for category in project.categories.all %}
+      <li class="list-group-item">{{ category.name }}</li>
+    {% endfor %}
+  </ul>
+  <br>
+
+  <p>Members:</p>
+  <ul class="list-group">
+    {% for member in project.members.all %}
+      <li class="list-group-item">{{ member.username }}</li>
+    {% endfor %}
+  </ul>
+  <br>
+
+  <a href="{% url 'projects:list' %}" class="btn btn-primary">Back to Project List</a>
+{% endblock %}

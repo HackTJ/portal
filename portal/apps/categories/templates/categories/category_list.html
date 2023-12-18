@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}HackTJ Portal: Manage Categories{% endblock %}
+
+{% block content %}
+  <h1>Project Categories</h1>
+  <table class="table table-striped table-sm table-bordered">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th># of Projects</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for category in categories %}
+        <tr>
+          <td>{{ category.name }}</td>
+          <td>{{ category.projects.count }}</td>
+          <td>
+            <div class="btn-group">
+              <a href="{% url 'categories:detail' category.id %}" class="btn btn-primary btn-sm">Show</a>
+              <a href="{% url 'categories:update' category.id %}" class="btn btn-secondary btn-sm">Edit</a>
+              <a href="{% url 'categories:delete' category.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a href="{% url 'categories:create' %}" class="btn btn-primary">Create Category</a>
+{% endblock %}

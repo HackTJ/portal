@@ -40,8 +40,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.staticfiles",
     "social_django",
+    "django_bootstrap5",
     "portal.apps.main",
+    "portal.apps.categories",
     "portal.apps.locations",
+    "portal.apps.projects",
 ]
 
 MIDDLEWARE = [

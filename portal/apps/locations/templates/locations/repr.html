@@ -1,0 +1,7 @@
+{% if location.name %}
+  <li class="list-group-item">{{ location.name }}</li>
+{% endif %}
+<li class="list-group-item">Floor {{ location.floor }}</li>
+{% if location.room %}
+  <li class="list-group-item">Room {{ location.room }}</li>
+{% endif %}
