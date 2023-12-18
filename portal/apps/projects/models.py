@@ -34,8 +34,6 @@ class Project(models.Model):
             raise ValidationError("Must set either location or location description.")
 
     def __str__(self):
-        if self.location:
-            return f"{self.name} ({self.location})"
         return self.name
 
     def __repr__(self):
