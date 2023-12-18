@@ -7,6 +7,20 @@ class User(AbstractUser):
     is_judge = models.BooleanField(default=False)
     is_team = models.BooleanField(default=False)
 
+    @property
+    def is_admin(self):
+        return self.is_superuser or self.is_team
+
+    def has_module_perms(self, app_label):
+        if self.is_admin:
+            return True
+        return super().has_module_perms(app_label)
+
+    def has_perm(self, perm, obj=None):
+        if self.is_admin:
+            return True
+        return super().has_perm(perm, obj)
+
     def __str__(self):
         return self.username
 

@@ -8,6 +8,10 @@ def index_view(request: HttpRequest) -> HttpResponse:
     return render(request, "main/index.html")
 
 
+def about_view(request: HttpRequest) -> HttpResponse:
+    return render(request, "main/about.html")
+
+
 def login_view(request: HttpRequest) -> HttpResponse:
     return render(request, "main/login.html")
 
