@@ -5,6 +5,9 @@
 {% block content %}
   <div class="d-flex flex-column align-items-center">
     <h1 class="text-center">Log In</h1>
-    <a class="btn btn-success" href="{% url 'social:begin' 'google-oauth2' %}">Log In With Google</a>
+    <a class="btn btn-success" href="{% url 'social:begin' 'google-oauth2' %}">
+      <i class="bi bi-google"></i>
+      Log In With Google
+    </a>
   </div>
 {% endblock %}
