@@ -35,7 +35,17 @@
   <p>Members:</p>
   <ul class="list-group">
     {% for member in project.members.all %}
-      <li class="list-group-item">{{ member.username }}</li>
+      <li class="list-group-item d-flex justify-content-between align-items-middle">
+        <span>
+          {{ member.username }}
+          {% if member == request.user %}
+            (you)
+          {% endif %}
+        </span>
+        {% if member == request.user %}
+          <a href="{% url 'projects:leave' project.id %}" class="btn btn-danger btn-sm">Leave Project</a>
+        {% endif %}
+      </li>
     {% endfor %}
   </ul>
   <br>

@@ -55,4 +55,5 @@ class Project(RulesModel):
             "view": is_admin | is_project_member,
             "change": is_admin | is_project_member,
             "delete": is_admin | is_project_member,
+            "leave": is_project_member,
         }

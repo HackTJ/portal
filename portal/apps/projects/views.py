@@ -1,8 +1,14 @@
+from django.contrib import messages
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
-from rules.contrib.views import AutoPermissionRequiredMixin, PermissionRequiredMixin
+from rules.contrib.views import (
+    AutoPermissionRequiredMixin,
+    PermissionRequiredMixin,
+    permission_required,
+    objectgetter,
+)
 
 from .models import Project
 
@@ -81,3 +87,15 @@ def my_project_view(request: HttpRequest) -> HttpResponse:
 
     project = projects.first()
     return redirect("projects:detail", project.id)
+
+
+@permission_required("projects.leave_project", fn=objectgetter(Project, "project_id"))
+def leave_project_view(request: HttpRequest, project_id: int) -> HttpResponse:
+    project = Project.objects.get(id=project_id)
+
+    if request.method == "POST":
+        project.members.remove(request.user)
+        messages.success(request, f"You have left the project {project.name}.")
+        return redirect("main:index")
+
+    return render(request, "projects/leave_project.html", {"project": project})
