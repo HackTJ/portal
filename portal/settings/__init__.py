@@ -122,9 +122,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Authentication
 
 AUTH_USER_MODEL = "main.User"
+LOGIN_URL = "main:login"
 
 AUTHENTICATION_BACKENDS = [
     "social_core.backends.google.GoogleOAuth2",
+    "rules.permissions.ObjectPermissionBackend",
     "django.contrib.auth.backends.ModelBackend",
 ]
 
@@ -143,8 +145,8 @@ SOCIAL_AUTH_PIPELINE = (
     "portal.apps.main.oauth.post_login",
 )
 
-SOCIAL_AUTH_LOGIN_URL = "main:login"
-SOCIAL_AUTH_LOGIN_ERROR_URL = "main:login"
+SOCIAL_AUTH_LOGIN_URL = LOGIN_URL
+SOCIAL_AUTH_LOGIN_ERROR_URL = LOGIN_URL
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = "main:index"
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS = ["fcpsschools.net"]

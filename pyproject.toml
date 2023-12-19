@@ -10,6 +10,7 @@ python = "^3.11"
 django = "^5.0"
 social-auth-app-django = "^5.4.0"
 django-bootstrap5 = "^23.3"
+rules = "^3.3"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.12.0"

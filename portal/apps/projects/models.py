@@ -1,13 +1,16 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
+from rules.contrib.models import RulesModel
 
+from .rules import no_other_projects, is_project_member
 from ..categories.models import Category
 from ..locations.models import Location
 from ..main.models import User
+from ..main.rules import is_admin
 
 
-class Project(models.Model):
+class Project(RulesModel):
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=4096)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -46,3 +49,10 @@ class Project(models.Model):
     class Meta:
         default_related_name = "projects"
         get_latest_by = "created_at"
+        rules_permissions = {
+            "list": is_admin,
+            "add": is_admin | no_other_projects,
+            "view": is_admin | is_project_member,
+            "change": is_admin | is_project_member,
+            "delete": is_admin | is_project_member,
+        }

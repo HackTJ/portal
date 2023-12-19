@@ -1,5 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from rules.contrib.models import RulesModel
+
+from ..main.rules import is_admin
 
 
 def validate_room(value):
@@ -17,7 +20,7 @@ def validate_room(value):
         raise ValidationError("Fifth character of room number must be a letter.")
 
 
-class Location(models.Model):
+class Location(RulesModel):
     name = models.CharField(max_length=255, null=True, blank=True)
 
     FLOORS = ((x, x) for x in ("5", "6", "7", "8"))
@@ -43,3 +46,12 @@ class Location(models.Model):
 
     def __repr__(self):
         return f"<Location: {self.__str__()}>"
+
+    class Meta:
+        rules_permissions = {
+            "list": is_admin,
+            "add": is_admin,
+            "view": is_admin,
+            "change": is_admin,
+            "delete": is_admin,
+        }

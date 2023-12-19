@@ -1,16 +1,18 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from rules.contrib.views import AutoPermissionRequiredMixin, PermissionRequiredMixin
 
 from .models import Category
 
 
-class CategoryListView(ListView):
+class CategoryListView(PermissionRequiredMixin, ListView):
     context_object_name = "categories"
     model = Category
     ordering = ["name"]
+    permission_required = "categories.list_category"
 
 
-class CategoryCreateView(CreateView):
+class CategoryCreateView(AutoPermissionRequiredMixin, CreateView):
     context_object_name = "category"
     extra_context = {"title": "Create Category"}
     fields = ["name", "description"]
@@ -22,13 +24,13 @@ class CategoryCreateView(CreateView):
         return reverse_lazy("categories:detail", kwargs={"category_id": self.object.id})
 
 
-class CategoryDetailView(DetailView):
+class CategoryDetailView(AutoPermissionRequiredMixin, DetailView):
     context_object_name = "category"
     model = Category
     pk_url_kwarg = "category_id"
 
 
-class CategoryUpdateView(UpdateView):
+class CategoryUpdateView(AutoPermissionRequiredMixin, UpdateView):
     context_object_name = "category"
     extra_context = {"title": "Update Category"}
     fields = ["name", "description"]
@@ -40,7 +42,7 @@ class CategoryUpdateView(UpdateView):
         return reverse_lazy("categories:detail", kwargs={"category_id": self.object.id})
 
 
-class CategoryDeleteView(DeleteView):
+class CategoryDeleteView(AutoPermissionRequiredMixin, DeleteView):
     context_object_name = "category"
     extra_context = {"title": "Delete Category"}
     model = Category

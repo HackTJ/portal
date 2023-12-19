@@ -508,6 +508,17 @@ requests = ">=2.0.0"
 rsa = ["oauthlib[signedtoken] (>=3.0.0)"]
 
 [[package]]
+name = "rules"
+version = "3.3"
+description = "Awesome Django authorization, without the database"
+optional = false
+python-versions = "*"
+files = [
+    {file = "rules-3.3-py2.py3-none-any.whl", hash = "sha256:12c8bbab5f54560e68528fcca7abc0e162c35ac882e3cc0daed40ac49c963070"},
+    {file = "rules-3.3.tar.gz", hash = "sha256:bf7bea8b724b73c36a622714c1b3557620c187a2ee05321a2ac8ab7472dc4464"},
+]
+
+[[package]]
 name = "social-auth-app-django"
 version = "5.4.0"
 description = "Python Social Authentication, Django integration."
@@ -594,4 +605,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "77812b65cb864c49e591b11857075b9d24154898cc30287a8411d3a0c43c0536"
+content-hash = "be62002a58c241ac6da2ca6dc5fa8a42fad056a3dad73c5d69e689c3f1a6bbc5"
