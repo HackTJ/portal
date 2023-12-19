@@ -83,6 +83,7 @@ def my_project_view(request: HttpRequest) -> HttpResponse:
     projects = request.user.projects
 
     if not projects.exists():
+        messages.info(request, "You don't have a project yet - create one!")
         return redirect("projects:create")
 
     project = projects.first()
