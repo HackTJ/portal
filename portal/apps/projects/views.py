@@ -7,6 +7,7 @@ from .models import Project
 class ProjectListView(ListView):
     context_object_name = "projects"
     model = Project
+    ordering = ["-created_at"]
 
 
 class ProjectCreateView(CreateView):

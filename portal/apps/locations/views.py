@@ -7,6 +7,7 @@ from .models import Location
 class LocationListView(ListView):
     context_object_name = "locations"
     model = Location
+    ordering = ["floor", "room"]
 
 
 class LocationCreateView(CreateView):

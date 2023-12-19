@@ -7,6 +7,7 @@ from .models import Category
 class CategoryListView(ListView):
     context_object_name = "categories"
     model = Category
+    ordering = ["name"]
 
 
 class CategoryCreateView(CreateView):
