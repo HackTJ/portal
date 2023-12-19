@@ -26,6 +26,10 @@ urlpatterns = [
         include(("portal.apps.categories.urls", "categories"), namespace="categories"),
     ),
     path(
+        "locations/",
+        include(("portal.apps.locations.urls", "locations"), namespace="locations"),
+    ),
+    path(
         "projects/",
         include(("portal.apps.projects.urls", "projects"), namespace="projects"),
     ),

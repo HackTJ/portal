@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}HackTJ Portal: Location Detail{% endblock %}
+
+{% block content %}
+  <div class="d-flex align-items-center">
+    <h1>{{ location }}</h1>
+    &emsp;
+    <div class="btn-group">
+      <a href="{% url 'locations:update' location.id %}" class="btn btn-secondary btn-sm">Edit</a>
+      <a href="{% url 'locations:delete' location.id %}" class="btn btn-danger btn-sm">Delete</a>
+    </div>
+  </div>
+  <ul class="list-group">
+    {% include 'locations/repr.html' with location=location %}
+  </ul>
+  <br>
+  {% include 'projects/list.html' with projects=location.projects.all %}
+  <a href="{% url 'locations:list' %}" class="btn btn-primary">
+    <i class="bi bi-arrow-left"></i>
+    Back to Location List
+  </a>
+  {% if request.user.is_admin_admin %}
+    <a href="{% url 'admin:locations_location_change' location.id %}" class="btn">
+      <i class="bi bi-gear"></i>
+      Admin
+    </a>
+  {% endif %}
+{% endblock %}

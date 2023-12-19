@@ -32,12 +32,14 @@ class Location(models.Model):
             raise ValidationError("Room number must start with the floor number.")
 
     def __str__(self):
-        value = self.room if self.room else f"F-{self.floor}"
-        if self.name:
-            value += f" ({self.name})"
-        if self.capacity:
-            value += f" [{self.capacity}]"
-        return value
+        if self.name and self.room:
+            return f"{self.room} {self.name}"
+        elif self.name:
+            return self.name
+        elif self.room:
+            return self.room
+        else:
+            return f"Location {self.id}"
 
     def __repr__(self):
         return f"<Location: {self.__str__()}>"
