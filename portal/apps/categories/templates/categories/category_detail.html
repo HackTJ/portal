@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load rules %}
 
 {% block title %}HackTJ Portal: Category Detail{% endblock %}
 
@@ -7,16 +8,31 @@
     <h1>{{ category.name }}</h1>
     &emsp;
     <div class="btn-group">
-      <a href="{% url 'categories:update' category.id %}" class="btn btn-secondary btn-sm">Edit</a>
-      <a href="{% url 'categories:delete' category.id %}" class="btn btn-danger btn-sm">Delete</a>
+      {% has_perm 'categories.change_category' request.user category as can_change_category %}
+      {% has_perm 'categories.delete_category' request.user category as can_delete_category %}
+      {% if can_change_category %}
+        <a href="{% url 'categories:update' category.id %}" class="btn btn-secondary btn-sm">Edit</a>
+      {% endif %}
+      {% if can_delete_category %}
+        <a href="{% url 'categories:delete' category.id %}" class="btn btn-danger btn-sm">Delete</a>
+      {% endif %}
     </div>
   </div>
   <p>{{ category.description }}</p>
-  {% include 'projects/list.html' with projects=category.projects.all %}
-  <a href="{% url 'categories:list' %}" class="btn btn-primary">
-    <i class="bi bi-arrow-left"></i>
-    Back to Category List
-  </a>
+
+  {% has_perm 'projects.list_project' request.user as can_list_projects %}
+  {% if can_list_projects %}
+    {% include 'projects/list.html' with projects=category.projects.all %}
+  {% endif %}
+
+  {% has_perm 'categories.list_category' request.user as can_list_categories %}
+  {% if can_list_categories %}
+    <a href="{% url 'categories:list' %}" class="btn btn-primary">
+      <i class="bi bi-arrow-left"></i>
+      Back to Category List
+    </a>
+  {% endif %}
+
   {% if request.user.is_admin_admin %}
     <a href="{% url 'admin:categories_category_change' category.id %}" class="btn">
       <i class="bi bi-gear"></i>

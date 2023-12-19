@@ -1,3 +1,5 @@
+{% load rules %}
+
 <table class="table table-striped table-sm table-bordered">
   <thead>
     <tr>
@@ -13,9 +15,18 @@
         <td>{{ category.projects.count }}</td>
         <td>
           <div class="btn-group">
-            <a href="{% url 'categories:detail' category.id %}" class="btn btn-primary btn-sm">Show</a>
-            <a href="{% url 'categories:update' category.id %}" class="btn btn-secondary btn-sm">Edit</a>
-            <a href="{% url 'categories:delete' category.id %}" class="btn btn-danger btn-sm">Delete</a>
+            {% has_perm 'categories.view_category' request.user category as can_view_categories %}
+            {% has_perm 'categories.change_category' request.user category as can_change_categories %}
+            {% has_perm 'categories.delete_category' request.user category as can_delete_categories %}
+            {% if can_view_categories %}
+              <a href="{% url 'categories:detail' category.id %}" class="btn btn-primary btn-sm">Show</a>
+            {% endif %}
+            {% if can_change_categories %}
+              <a href="{% url 'categories:update' category.id %}" class="btn btn-secondary btn-sm">Edit</a>
+            {% endif %}
+            {% if can_delete_categories %}
+              <a href="{% url 'categories:delete' category.id %}" class="btn btn-danger btn-sm">Delete</a>
+            {% endif %}
           </div>
         </td>
       </tr>

@@ -10,5 +10,6 @@ urlpatterns = [
     path("<int:project_id>/update/", views.ProjectUpdateView.as_view(), name="update"),
     path("<int:project_id>/delete/", views.ProjectDeleteView.as_view(), name="delete"),
     path("<int:project_id>/leave/", views.leave_project_view, name="leave"),
+    path("<int:project_id>/kick/<int:user_id>/", views.kick_view, name="kick"),
     path("my_project/", views.my_project_view, name="my_project"),
 ]

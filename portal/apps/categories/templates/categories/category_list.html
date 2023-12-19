@@ -1,15 +1,21 @@
 {% extends "base.html" %}
+{% load rules %}
 
 {% block title %}HackTJ Portal: Manage Categories{% endblock %}
 
 {% block content %}
   <h1>Project Categories</h1>
   {% include 'categories/list.html' with categories=categories %}
-  <a href="{% url 'categories:create' %}" class="btn btn-primary">
-    <i class="bi bi-plus-square"></i>
-    &nbsp;
-    Create Category
-  </a>
+
+  {% has_perm 'categories.add_category' request.user as can_add_categories %}
+  {% if can_add_categories %}
+    <a href="{% url 'categories:create' %}" class="btn btn-primary">
+      <i class="bi bi-plus-square"></i>
+      &nbsp;
+      Create Category
+    </a>
+  {% endif %}
+
   {% if request.user.is_admin_admin %}
     <a href="{% url 'admin:categories_category_changelist' %}" class="btn">
       <i class="bi bi-gear"></i>

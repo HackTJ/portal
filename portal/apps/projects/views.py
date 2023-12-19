@@ -99,3 +99,16 @@ def leave_project_view(request: HttpRequest, project_id: int) -> HttpResponse:
         return redirect("main:index")
 
     return render(request, "projects/leave_project.html", {"project": project})
+
+
+@permission_required("projects.kick_from_project", fn=objectgetter(Project, "project_id"))
+def kick_view(request: HttpRequest, project_id: int, user_id: int) -> HttpResponse:
+    project = Project.objects.get(id=project_id)
+    user = project.members.get(id=user_id)
+
+    if request.method == "POST":
+        project.members.remove(user)
+        messages.success(request, f"You have kicked {user.username} from {project.name}.")
+        return redirect("projects:detail", project.id)
+
+    return render(request, "projects/kick_from_project.html", {"project": project, "user": user})

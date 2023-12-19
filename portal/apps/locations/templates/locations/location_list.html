@@ -1,15 +1,21 @@
 {% extends "base.html" %}
+{% load rules %}
 
 {% block title %}HackTJ Portal: Manage Locations{% endblock %}
 
 {% block content %}
   <h1>Locations</h1>
   {% include 'locations/list.html' with locations=locations %}
-  <a href="{% url 'locations:create' %}" class="btn btn-primary">
-    <i class="bi bi-plus-square"></i>
-    &nbsp;
-    Create Locations
-  </a>
+
+  {% has_perm 'locations.add_location' request.user as can_add_locations %}
+  {% if can_add_locations %}
+    <a href="{% url 'locations:create' %}" class="btn btn-primary">
+      <i class="bi bi-plus-square"></i>
+      &nbsp;
+      Create Location
+    </a>
+  {% endif %}
+
   {% if request.user.is_admin_admin %}
     <a href="{% url 'admin:locations_location_changelist' %}" class="btn">
       <i class="bi bi-gear"></i>

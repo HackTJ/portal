@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load rules %}
 
 {% block title %}HackTJ Portal: Location Detail{% endblock %}
 
@@ -7,19 +8,34 @@
     <h1>{{ location }}</h1>
     &emsp;
     <div class="btn-group">
-      <a href="{% url 'locations:update' location.id %}" class="btn btn-secondary btn-sm">Edit</a>
-      <a href="{% url 'locations:delete' location.id %}" class="btn btn-danger btn-sm">Delete</a>
+      {% has_perm 'locations.change_location' request.user location as can_change_location %}
+      {% has_perm 'locations.delete_location' request.user location as can_delete_location %}
+      {% if can_change_location %}
+        <a href="{% url 'locations:update' location.id %}" class="btn btn-secondary btn-sm">Edit</a>
+      {% endif %}
+      {% if can_delete_location %}
+        <a href="{% url 'locations:delete' location.id %}" class="btn btn-danger btn-sm">Delete</a>
+      {% endif %}
     </div>
   </div>
   <ul class="list-group">
     {% include 'locations/repr.html' with location=location %}
   </ul>
   <br>
-  {% include 'projects/list.html' with projects=location.projects.all %}
-  <a href="{% url 'locations:list' %}" class="btn btn-primary">
-    <i class="bi bi-arrow-left"></i>
-    Back to Location List
-  </a>
+
+  {% has_perm 'projects.list_project' request.user as can_list_projects %}
+  {% if can_list_projects %}
+    {% include 'projects/list.html' with projects=location.projects.all %}
+  {% endif %}
+
+  {% has_perm 'locations.list_location' request.user as can_list_locations %}
+  {% if can_list_locations %}
+    <a href="{% url 'locations:list' %}" class="btn btn-primary">
+      <i class="bi bi-arrow-left"></i>
+      Back to Location List
+    </a>
+  {% endif %}
+
   {% if request.user.is_admin_admin %}
     <a href="{% url 'admin:locations_location_change' location.id %}" class="btn">
       <i class="bi bi-gear"></i>

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load rules %}
 
 {% block title %}HackTJ Portal: Project Detail{% endblock %}
 
@@ -7,8 +8,14 @@
     <h1>{{ project.name }}</h1>
     &emsp;
     <div class="btn-group">
-      <a href="{% url 'projects:update' project.id %}" class="btn btn-secondary btn-sm">Edit</a>
-      <a href="{% url 'projects:delete' project.id %}" class="btn btn-danger btn-sm">Delete</a>
+      {% has_perm 'projects.change_project' request.user project as can_change_project %}
+      {% has_perm 'projects.delete_project' request.user project as can_delete_project %}
+      {% if can_change_project %}
+        <a href="{% url 'projects:update' project.id %}" class="btn btn-secondary btn-sm">Edit</a>
+      {% endif %}
+      {% if can_delete_project %}
+        <a href="{% url 'projects:delete' project.id %}" class="btn btn-danger btn-sm">Delete</a>
+      {% endif %}
     </div>
   </div>
   <p>{{ project.description }}</p>
@@ -43,17 +50,29 @@
           {% endif %}
         </span>
         {% if member == request.user %}
-          <a href="{% url 'projects:leave' project.id %}" class="btn btn-danger btn-sm">Leave Project</a>
+          {% has_perm 'projects.leave_project' request.user project as can_leave_project %}
+          {% if can_leave_project %}
+            <a href="{% url 'projects:leave' project.id %}" class="btn btn-danger btn-sm">Leave Project</a>
+          {% endif %}
+        {% else %}
+          {% has_perm 'projects.kick_from_project' request.user project as can_kick_from_project %}
+          {% if can_kick_from_project %}
+            <a href="{% url 'projects:kick' project.id member.id %}" class="btn btn-danger btn-sm">Kick from Project</a>
+          {% endif %}
         {% endif %}
       </li>
     {% endfor %}
   </ul>
   <br>
 
-  <a href="{% url 'projects:list' %}" class="btn btn-primary">
-    <i class="bi bi-arrow-left"></i>
-    Back to Project List
-  </a>
+  {% has_perm 'projects.list_project' request.user as can_list_projects %}
+  {% if can_list_projects %}
+    <a href="{% url 'projects:list' %}" class="btn btn-primary">
+      <i class="bi bi-arrow-left"></i>
+      Back to Project List
+    </a>
+  {% endif %}
+
   {% if request.user.is_admin_admin %}
     <a href="{% url 'admin:projects_project_change' project.id %}" class="btn">
       <i class="bi bi-gear"></i>

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.staticfiles",
     "social_django",
+    "rules",
     "django_bootstrap5",
     "portal.apps.main",
     "portal.apps.categories",

@@ -1,15 +1,21 @@
 {% extends "base.html" %}
+{% load rules %}
 
 {% block title %}HackTJ Portal: Manage Projects{% endblock %}
 
 {% block content %}
   <h1>Projects</h1>
   {% include 'projects/list.html' with projects=projects %}
-  <a href="{% url 'projects:create' %}" class="btn btn-primary">
-    <i class="bi bi-plus-square"></i>
-    &nbsp;
-    Create Project
-  </a>
+
+  {% has_perm 'projects.add_project' request.user as can_add_projects %}
+  {% if can_add_projects %}
+    <a href="{% url 'projects:create' %}" class="btn btn-primary">
+      <i class="bi bi-plus-square"></i>
+      &nbsp;
+      Create Project
+    </a>
+  {% endif %}
+
   {% if request.user.is_admin_admin %}
     <a href="{% url 'admin:projects_project_changelist' %}" class="btn">
       <i class="bi bi-gear"></i>

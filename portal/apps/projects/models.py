@@ -56,4 +56,5 @@ class Project(RulesModel):
             "change": is_admin | is_project_member,
             "delete": is_admin | is_project_member,
             "leave": is_project_member,
+            "kick_from": is_project_member,
         }
