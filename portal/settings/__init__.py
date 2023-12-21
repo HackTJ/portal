@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "social_django",
     "rules",
     "django_bootstrap5",
+    "django_extensions",
     "portal.apps.main",
     "portal.apps.categories",
     "portal.apps.locations",
