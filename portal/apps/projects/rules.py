@@ -11,3 +11,10 @@ def is_project_member(user, project):
     if not project:
         return False
     return user in project.members.all()
+
+
+@rules.predicate
+def is_unsubmitted(_, project):
+    if not project:
+        return False
+    return not project.submitted

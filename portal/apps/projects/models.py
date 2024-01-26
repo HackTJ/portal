@@ -3,7 +3,7 @@ from django.db import models
 from django.urls import reverse
 from rules.contrib.models import RulesModel
 
-from .rules import no_other_projects, is_project_member
+from .rules import no_other_projects, is_project_member, is_unsubmitted
 from ..categories.models import Category
 from ..locations.models import Location
 from ..main.models import User
@@ -33,6 +33,8 @@ class Project(RulesModel):
     location = models.ForeignKey(Location, null=True, blank=True, on_delete=models.SET_NULL)
     location_description = models.CharField(max_length=1024, null=True, blank=True)
 
+    submitted = models.BooleanField(default=False)
+
     def clean(self):
         if not self.location and not self.location_description:
             raise ValidationError("Must set either location or location description.")
@@ -54,7 +56,8 @@ class Project(RulesModel):
             "add": is_admin | no_other_projects,
             "view": is_admin | is_project_member,
             "change": is_admin | is_project_member,
-            "delete": is_admin | is_project_member,
-            "leave": is_project_member,
-            "kick_from": is_project_member,
+            "delete": (is_admin | is_project_member) & is_unsubmitted,
+            "submit": (is_admin | is_project_member) & is_unsubmitted,
+            "leave": is_project_member & is_unsubmitted,
+            "kick_from": (is_admin | is_project_member) & is_unsubmitted,
         }

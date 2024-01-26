@@ -90,8 +90,21 @@ def my_project_view(request: HttpRequest) -> HttpResponse:
     return redirect("projects:detail", project.id)
 
 
+@permission_required("projects.submit_project", fn=objectgetter(Project, "project_id"))
+def submit_view(request: HttpRequest, project_id: int) -> HttpResponse:
+    project = Project.objects.get(id=project_id)
+
+    if request.method == "POST":
+        project.submitted = True
+        project.save()
+        messages.success(request, f"The project {project.name} has been submitted!")
+        return redirect("projects:detail", project.id)
+
+    return render(request, "projects/submit_project.html", {"project": project})
+
+
 @permission_required("projects.leave_project", fn=objectgetter(Project, "project_id"))
-def leave_project_view(request: HttpRequest, project_id: int) -> HttpResponse:
+def leave_view(request: HttpRequest, project_id: int) -> HttpResponse:
     project = Project.objects.get(id=project_id)
 
     if request.method == "POST":

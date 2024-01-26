@@ -4,7 +4,7 @@
 
 {% block content %}
   <h1>Leave Project?</h1>
-  <p>Are you sure you want to leave the project {{ project }}?</p>
+  <p>Are you sure you want to leave the project <strong>{{ project }}</strong>?</p>
   <form method="post">
     {% csrf_token %}
     <input type="submit" class="btn btn-danger" value="Leave Project">

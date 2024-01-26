@@ -65,6 +65,24 @@
   </ul>
   <br>
 
+  {% if project.submitted %}
+    <p><strong>
+      Note: This project has been submitted for judging.
+      You can still edit project details until the deadline, but you may not leave, delete, or kick members from the project.
+      If this was a mistake, please ask a HackTJ team member.
+    </strong></p>
+  {% else %}
+    {% has_perm 'projects.submit' request.user as can_submit %}
+    {% if can_submit %}
+      <a href="{% url 'projects:submit' project.id %}" class="btn btn-success">
+        <i class="bi bi-check-circle"></i>
+        Submit Project
+      </a>
+      <br>
+    {% endif %}
+  {% endif %}
+  <br>
+
   {% has_perm 'projects.list_project' request.user as can_list_projects %}
   {% if can_list_projects %}
     <a href="{% url 'projects:list' %}" class="btn btn-primary">
