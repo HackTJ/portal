@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}HackTJ Portal: Leave Project{% endblock %}
+
+{% block content %}
+  <h1>{{ title }}?</h1>
+  <p>Are you sure you want to {{ message|safe }}?</p>
+  {% if long_message %}
+    <p>{{ long_message|safe }}</p>
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    <input type="submit" class="btn btn-danger" value="{{ title }}">
+    <a class="btn btn-secondary" href="{{ back }}">Cancel</a>
+  </form>
+{% endblock %}

@@ -11,4 +11,4 @@ class CustomSocialAuthExceptionMiddleware(SocialAuthExceptionMiddleware):
 
 
 def post_login(user, request, *args, **kwargs):
-    messages.success(request, f"Welcome, {user.username}!")
+    messages.success(request, f"Welcome, {user}!")

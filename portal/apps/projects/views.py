@@ -97,10 +97,17 @@ def submit_view(request: HttpRequest, project_id: int) -> HttpResponse:
     if request.method == "POST":
         project.submitted = True
         project.save()
-        messages.success(request, f"The project {project.name} has been submitted!")
+        messages.success(request, f"The project {project} has been submitted!")
         return redirect("projects:detail", project.id)
 
-    return render(request, "projects/submit_project.html", {"project": project})
+    context = {
+        "title": "Submit Project",
+        "message": f"submit <strong>{project}</strong>",
+        "long_message": "You can still edit project details until the deadline, but you may not leave, delete, or kick members from the project.<br>This action cannot be undone.",
+        "back": reverse_lazy("projects:detail", kwargs={"project_id": project.id}),
+    }
+
+    return render(request, "confirmation.html", context)
 
 
 @permission_required("projects.leave_project", fn=objectgetter(Project, "project_id"))
@@ -109,10 +116,16 @@ def leave_view(request: HttpRequest, project_id: int) -> HttpResponse:
 
     if request.method == "POST":
         project.members.remove(request.user)
-        messages.success(request, f"You have left the project {project.name}.")
+        messages.success(request, f"You have left the project {project}.")
         return redirect("main:index")
 
-    return render(request, "projects/leave_project.html", {"project": project})
+    context = {
+        "title": "Leave Project",
+        "message": f"leave <strong>{project}</strong>",
+        "back": reverse_lazy("projects:detail", kwargs={"project_id": project.id}),
+    }
+
+    return render(request, "confirmation.html", context)
 
 
 @permission_required("projects.kick_from_project", fn=objectgetter(Project, "project_id"))
@@ -122,7 +135,13 @@ def kick_view(request: HttpRequest, project_id: int, user_id: int) -> HttpRespon
 
     if request.method == "POST":
         project.members.remove(user)
-        messages.success(request, f"You have kicked {user.username} from {project.name}.")
+        messages.success(request, f"You have kicked {user} from {project}.")
         return redirect("projects:detail", project.id)
 
-    return render(request, "projects/kick_from_project.html", {"project": project, "user": user})
+    context = {
+        "title": "Kick from Project",
+        "message": f"kick <strong>{user}</strong> from <strong>{project}</strong>",
+        "back": reverse_lazy("projects:detail", kwargs={"project_id": project.id}),
+    }
+
+    return render(request, "confirmation.html", context)
