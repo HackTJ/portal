@@ -24,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
+    "3.87.158.118",
     "localhost",
     "portal.hacktj.org",
 ]
