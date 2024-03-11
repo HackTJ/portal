@@ -1,0 +1,13 @@
+[Unit]
+Description=HackTJ Portal
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/work/portal
+ExecStart=poetry run gunicorn -c gunicorn.py
+Restart=on-failure
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target
