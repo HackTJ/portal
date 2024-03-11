@@ -19,5 +19,6 @@ DATABASES = {
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "abc.apps.googleusercontent.com"
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "abc"
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 
 STATIC_ROOT = "/var/www/portal/static"
