@@ -4,8 +4,9 @@ DEBUG = False
 
 SECRET_KEY = "django-notinsecure-x45u%b4qr#sze#%w@uy&nx*c%6(k9s(%4quww(&xp(ka4lib_5"
 
-SECURE_HSTS_SECONDS = 30
-#SECURE_HSTS_PRELOAD = True
+# Set below to 63072000 (2 years) when we are confident that certificate renewal works
+SECURE_HSTS_SECONDS = 3600
+SECURE_HSTS_PRELOAD = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
