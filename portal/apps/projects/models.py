@@ -1,3 +1,4 @@
+import rules
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
@@ -7,7 +8,7 @@ from .rules import no_other_projects, is_project_member, is_unsubmitted
 from ..categories.models import Category
 from ..locations.models import Location
 from ..main.models import User
-from ..main.rules import is_admin
+from ..main.rules import admin_only
 
 
 class Project(RulesModel):
@@ -52,12 +53,12 @@ class Project(RulesModel):
         default_related_name = "projects"
         get_latest_by = "created_at"
         rules_permissions = {
-            "list": is_admin,
-            "add": is_admin | no_other_projects,
-            "view": is_admin | is_project_member,
-            "change": is_admin | is_project_member,
-            "delete": (is_admin | is_project_member) & is_unsubmitted,
-            "submit": (is_admin | is_project_member) & is_unsubmitted,
+            "list": admin_only,
+            "add": no_other_projects,
+            "view": is_project_member,
+            "change": is_project_member,
+            "delete": is_project_member & is_unsubmitted,
+            "submit": is_project_member & is_unsubmitted,
             "leave": is_project_member & is_unsubmitted,
-            "kick_from": (is_admin | is_project_member) & is_unsubmitted,
+            "kick_from": is_project_member & is_unsubmitted,
         }

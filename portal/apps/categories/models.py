@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from rules.contrib.models import RulesModel
 
-from ..main.rules import is_admin
+from ..main.rules import admin_only
 
 
 class Category(RulesModel):
@@ -20,10 +20,10 @@ class Category(RulesModel):
 
     class Meta:
         rules_permissions = {
-            "list": is_admin,
-            "add": is_admin,
-            "view": is_admin,
-            "change": is_admin,
-            "delete": is_admin,
+            "list": admin_only,
+            "add": admin_only,
+            "view": admin_only,
+            "change": admin_only,
+            "delete": admin_only,
         }
         verbose_name_plural = "categories"
