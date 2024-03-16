@@ -131,20 +131,20 @@ SOCIAL_AUTH_PIPELINE = (
     "social_core.pipeline.social_auth.social_details",
     "social_core.pipeline.social_auth.social_uid",
     "social_core.pipeline.social_auth.auth_allowed",
+    "portal.apps.main.oauth.check_email_whitelist",
     "social_core.pipeline.social_auth.social_user",
     "social_core.pipeline.user.get_username",
     "social_core.pipeline.social_auth.associate_by_email",
     "social_core.pipeline.user.create_user",
     "social_core.pipeline.social_auth.associate_user",
     "social_core.pipeline.social_auth.load_extra_data",
+    "portal.apps.main.oauth.set_permissions",
     "portal.apps.main.oauth.post_login",
 )
 
 SOCIAL_AUTH_LOGIN_URL = LOGIN_URL
 SOCIAL_AUTH_LOGIN_ERROR_URL = LOGIN_URL
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = "main:index"
-
-SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS = ["fcpsschools.net"]
 
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 
