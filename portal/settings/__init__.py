@@ -148,6 +148,12 @@ SOCIAL_AUTH_LOGIN_REDIRECT_URL = "main:index"
 
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 
+# Use email whitelist, even when in DEBUG mode
+SOCIAL_AUTH_FORCE_USE_WHITELIST = False
+
+# Don't use email whitelist, even when in production
+SOCIAL_AUTH_FORCE_IGNORE_WHITELIST = False
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 

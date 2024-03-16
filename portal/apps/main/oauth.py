@@ -35,8 +35,12 @@ class CustomSocialAuthExceptionMiddleware(SocialAuthExceptionMiddleware):
 
 
 def check_email_whitelist(backend, details, *args, **kwargs):
-    if settings.DEBUG:
-        return  # Skip whitelist check in development
+    # Skip whitelist check in development, unless forced to use
+    if settings.DEBUG and not settings.SOCIAL_AUTH_FORCE_USE_WHITELIST:
+        return
+    # Skip whitelist check in production, only if forced to ignore
+    if settings.SOCIAL_AUTH_FORCE_IGNORE_WHITELIST:
+        return
     email = details.get("email")
     if email and email in WHITELIST:
         return
