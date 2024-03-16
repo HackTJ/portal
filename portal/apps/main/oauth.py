@@ -30,7 +30,7 @@ WHITELIST = USER_WHITELIST | TEAM_WHITELIST | ADMIN_WHITELIST
 class CustomSocialAuthExceptionMiddleware(SocialAuthExceptionMiddleware):
     def get_message(self, request, exception):
         if isinstance(exception, AuthForbidden):
-            return "Please log in with your fcpsschools.net account."
+            return "Please log in with the email you used for registration."
         return super().get_message(request, exception)
 
 
