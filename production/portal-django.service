@@ -5,7 +5,7 @@ After=network-online.target
 [Service]
 Type=simple
 WorkingDirectory=/root/work/portal
-ExecStart=poetry run gunicorn -c gunicorn.py
+ExecStart=poetry run gunicorn -c production/gunicorn.py
 Restart=on-failure
 RestartSec=60
 
