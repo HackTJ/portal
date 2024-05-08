@@ -8,7 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.9"
 django = "^4.2"
-social-auth-app-django = "^5.4.0"
+social-auth-app-django = "^5.4.1"
 django-bootstrap5 = "^23.3"
 rules = "^3.3"
 django-extensions = "^3.2.3"
