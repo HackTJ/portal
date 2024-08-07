@@ -2,7 +2,7 @@
 name = "portal"
 version = "0.1.0"
 description = ""
-authors = ["Krishnan Shankar <krishnans2006@gmail.com>"]
+authors = ["Krishnan Shankar <krishnans2006@gmail.com>", "Sami Elsayed <elsayedsamise@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]

@@ -1,3 +1,19 @@
 {% extends "base.html" %}
 
 {% block title %}HackTJ Portal{% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <div class="d-flex flex-column align-items-center">
+            <h3>Welcome to the HackTJ Portal {{ request.user.username }}!</h3>
+        </div>
+    {% else %}
+        <div class="d-flex flex-column align-items-center">
+            <p class="text-center">In order to use the HackTJ Portal, you must be logged in first.</p>
+            <a class="btn btn-success" href="{% url 'social:begin' 'google-oauth2' %}">
+                <i class="bi bi-google"></i>
+                Log In With Google
+            </a>
+        </div>
+    {% endif %}
+{% endblock %}
