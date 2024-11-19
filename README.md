@@ -53,6 +53,12 @@ cp dev.secret.py secret.py
 
 Make sure to edit `secret.py` with your Google OAuth2 client ID and secret.
 
+Finally, create your database and apply migrations with:
+
+```bash
+poetry run python manage.py migrate
+```
+
 ## Run
 
 The app can be run in a terminal with:
