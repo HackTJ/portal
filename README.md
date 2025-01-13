@@ -30,6 +30,8 @@ Make sure to:
 
 ### Application
 
+The portal is a Django-based web application that handles project submissions, team management, and judging for HackTJ. It integrates with Google OAuth2 for authentication and uses a whitelist-based access control system.
+
 Dependencies: (see `pyproject.toml`)
 - `django` is the web framework used
 - `social-auth-app-django` handles Google OAuth2 signup/login
@@ -69,6 +71,52 @@ poetry run python manage.py runserver
 
 Alternatively, a PyCharm run configuration can be found in `.run/`.
 This should automatically be detected when opening the project.
+
+## Security and Access Control
+
+### Email Whitelisting
+
+The portal uses email whitelisting to control access to the application. There are three levels of whitelisting:
+
+1. User Whitelist (`user_email_whitelist.txt`): Controls basic access to the portal
+2. Team Whitelist (`team_email_whitelist.txt`): Identifies HackTJ team members with elevated permissions
+3. Admin Whitelist (`admin_email_whitelist.txt`): Designates administrative users
+
+Whitelist files should be placed in the `secrets/` directory. The system will function without these files, but access will be restricted in production unless whitelisting is explicitly disabled.
+
+Configuration options:
+- `SOCIAL_AUTH_FORCE_USE_WHITELIST`: Forces whitelist checking even in development
+- `SOCIAL_AUTH_FORCE_IGNORE_WHITELIST`: Disables whitelist checking (use with caution)
+
+### Permissions Model
+
+The portal implements a hierarchical permissions system:
+
+1. Regular Users (`is_participant`):
+   - Can create one project
+   - Can view their own project
+   - Cannot modify submitted projects
+   - Cannot access admin features
+
+2. Team Members (`is_team`):
+   - Elevated access to manage the event
+   - Can view all projects
+   - Can manage categories and locations
+   - Identified through team whitelist
+
+3. Staff (`is_staff`):
+   - Access to Django admin panel
+   - Requires explicit staff status
+   - Additional permissions needed for specific admin features
+
+4. Superusers (`is_superuser`):
+   - Full system access
+   - Can manage all aspects of the portal
+   - Should be limited to technical administrators
+
+Custom permission properties:
+- `is_admin`: Either a superuser or team member
+- `is_admin_admin`: Both an admin and staff member
 
 ## Apps overview
 
@@ -139,7 +187,7 @@ Fields:
 
 ### Projects
 
-Projects are the main focus of the HackTJ portal, as they represent a team's submission to HackTJ.
+Projects are the main focus of the HackTJ portal, as they represent a team's submission to HackTJ. Each participant can create one project, and projects can have multiple team members.
 
 Fields:
 - Name (255 characters)
@@ -152,12 +200,23 @@ Fields:
 - Categories (list of `Category`s)
 - Location (a `Location`, optional)
 - Location description (1024 characters, optional)
+- Submitted status (boolean, defaults to false)
+
+Project Rules:
+- Users can only create one project unless they are admins
+- Projects require either a location or location description
+- Only unsubmitted projects can be modified
+- Project members can view their project details
+- Admins can view all projects
 
 | Action    | Route                                            | Permission required                                    |
 |-----------|--------------------------------------------------|--------------------------------------------------------|
 | List      | `/projects/`                                     | `is_admin`                                             |
 | Add       | `/projects/create/`                              | `is_admin` OR<br/>is not a member of any other project |
 | View      | `/projects/<int:project_id>/`                    | `is_admin` OR<br/>is a member of the project           |
+| Change    | `/projects/<int:project_id>/update/`             | (`is_admin` OR<br/>is a member of the project) AND<br/>project is not submitted |
+| Delete    | `/projects/<int:project_id>/delete/`             | `is_admin` OR<br/>is a member of the project           |
+| Submit    | `/projects/<int:project_id>/submit/`             | `is_admin` OR<br/>is a member of the project           |
 | Change    | `/projects/<int:project_id>/update/`             | `is_admin` OR<br/>is a member of the project           |
 | Delete    | `/projects/<int:project_id>/delete/`             | `is_admin` OR<br/>is a member of the project           |
 | Leave     | `/projects/<int:project_id>/leave/`              | is a member of the project                             |
